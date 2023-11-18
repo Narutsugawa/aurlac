@@ -1,3 +1,4 @@
+import 'package:aurlac/widgets/filled_button_yellow.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -28,8 +29,8 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.network(
-                'https://akamamadagascar.files.wordpress.com/2013/09/aurlac_decopassion.png?w=870&h=653',
+              Image.asset(
+                "assets/images/aurlac_decopassion.webp",
                 fit: BoxFit.cover,
               ),
               const Center(
@@ -149,23 +150,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Center(
                 child: Column(
                   children: [
-                    FilledButton(
-                      style: ButtonStyle(
-                        fixedSize: MaterialStateProperty.all(
-                            const Size.fromWidth(180)),
-                        backgroundColor: const MaterialStatePropertyAll(
-                          Color.fromARGB(255, 255, 228, 94),
-                        ),
-                        overlayColor:
-                            const MaterialStatePropertyAll(Colors.yellow),
-                      ),
-                      onPressed: () {},
-                      child: const Text(
-                        'Log in',
-                        style: TextStyle(
-                            color: Colors.black54, fontWeight: FontWeight.w700),
-                      ),
-                    ),
+                    FilleButtonYellow(),
                     TextButton(
                       onPressed: () {},
                       child: const Text(
@@ -175,18 +160,18 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20, left: 200),
-                      child: TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          'Don\'t have an account?',
-                          style: TextStyle(
-                            color: Colors.black54,
-                          ),
-                        ),
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(top: 20, left: 200),
+                    //   child: TextButton(
+                    //     onPressed: () {},
+                    //     child: const Text(
+                    //       'Don\'t have an account?',
+                    //       style: TextStyle(
+                    //         color: Colors.black54,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
