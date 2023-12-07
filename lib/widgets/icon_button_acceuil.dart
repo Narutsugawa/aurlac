@@ -1,3 +1,4 @@
+import 'package:aurlac/acceuil.de/product.dart';
 import 'package:flutter/material.dart';
 
 class IconButtonAcceuil extends StatefulWidget {
@@ -32,7 +33,12 @@ class _IconButtonAcceuilState extends State<IconButtonAcceuil> {
                 width: 75,
                 height: 75,
                 child: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    if (index == 1) {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (BuildContext context) => Product()));
+                    }
+                  },
                   icon: Icon(
                     data[index]['icon'],
                   ),

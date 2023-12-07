@@ -15,6 +15,8 @@ class _AcceuilState extends State<Acceuil> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          elevation: 5,
+          shadowColor: Colors.black54,
           actions: [
             Row(
               children: [
@@ -80,26 +82,27 @@ class _AcceuilState extends State<Acceuil> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 40, right: 40, top: 210),
-                  child: Container(
-                    color: Colors.grey,
-                    child: const Padding(
-                      padding: EdgeInsets.only(
-                          left: 15, top: 10, right: 10, bottom: 10),
-                      child: TextField(
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          icon: Icon(
-                            Icons.search,
-                            size: 35,
-                          ),
-                          iconColor: Colors.white,
-                          border: InputBorder.none,
-                          hintText: 'Search',
-                          hintStyle: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                          ),
-                        ),
+                  child: TextFormField(
+                    keyboardType: TextInputType.text,
+                    textCapitalization: TextCapitalization.words,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      filled: true,
+                      fillColor: Colors.grey,
+                      contentPadding: EdgeInsets.all(20.0),
+                      hintText: 'Search',
+                      hintStyle: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                      ),
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: Colors.white,
+                        size: 35,
                       ),
                     ),
                   ),
@@ -107,10 +110,11 @@ class _AcceuilState extends State<Acceuil> {
               ],
             ),
             const Expanded(
-                child: Padding(
-              padding: EdgeInsets.only(top: 60, left: 10, right: 10),
-              child: IconButtonAcceuil(),
-            )),
+              child: Padding(
+                padding: EdgeInsets.only(top: 60, left: 10, right: 10),
+                child: IconButtonAcceuil(),
+              ),
+            ),
           ],
         ),
       ),
