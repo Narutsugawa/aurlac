@@ -1,4 +1,5 @@
 import 'package:aurlac/acceuil.de/models/product_model.dart';
+import 'package:aurlac/widgets/decoration_card.dart';
 import 'package:flutter/material.dart';
 
 class Product extends StatefulWidget {
@@ -14,15 +15,18 @@ class _ProductState extends State<Product> {
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
-            actions: [
-              Row(
-                children: [
-                  IconButton(
-                      onPressed: () {}, icon: const Icon(Icons.notifications)),
-                  IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
-                ],
-              )
-            ],
+            automaticallyImplyLeading: false,
+            elevation: 5,
+            shadowColor: Colors.black54,
+            // actions: [
+            // //   Row(
+            //     children: [
+            //       IconButton(
+            //           onPressed: () {}, icon: const Icon(Icons.notifications)),
+            //       IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
+            //     ],
+            //   )
+            // ],
             backgroundColor: const Color.fromARGB(255, 255, 228, 94),
             title: const Text(
               'Aurlac',
@@ -36,7 +40,8 @@ class _ProductState extends State<Product> {
             children: [
               Expanded(
                 child: getProductList(),
-              )
+              ),
+              DecorationCard(),
             ],
           )),
     );

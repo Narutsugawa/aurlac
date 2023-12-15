@@ -1,4 +1,3 @@
-import 'package:aurlac/acceuil.dart';
 import 'package:aurlac/home.dart';
 import 'package:flutter/material.dart';
 

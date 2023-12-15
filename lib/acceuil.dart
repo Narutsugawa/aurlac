@@ -1,3 +1,4 @@
+import 'package:aurlac/widgets/decoration_card.dart';
 import 'package:aurlac/widgets/icon_button_acceuil.dart';
 import 'package:flutter/material.dart';
 
@@ -15,17 +16,18 @@ class _AcceuilState extends State<Acceuil> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           elevation: 5,
           shadowColor: Colors.black54,
-          actions: [
-            Row(
-              children: [
-                IconButton(
-                    onPressed: () {}, icon: const Icon(Icons.notifications)),
-                IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
-              ],
-            )
-          ],
+          // actions: [
+          //   Row(
+          //     children: [
+          //       IconButton(
+          //           onPressed: () {}, icon: const Icon(Icons.notifications)),
+          //       IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
+          //     ],
+          //   )
+          // ],
           backgroundColor: const Color.fromARGB(255, 255, 228, 94),
           title: const Text(
             'Aurlac',
@@ -115,6 +117,7 @@ class _AcceuilState extends State<Acceuil> {
                 child: IconButtonAcceuil(),
               ),
             ),
+            DecorationCard(),
           ],
         ),
       ),

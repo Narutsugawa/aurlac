@@ -5,6 +5,4 @@ class Produits {
   Produits(this.productName, this.productNumber);
 }
 
-List<Produits> productList = [
-  Produits('Exemple', 1),
-];
+List<Produits> productList = [];
