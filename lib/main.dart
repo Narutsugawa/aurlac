@@ -1,7 +1,13 @@
 import 'package:aurlac/home.dart';
+import 'package:aurlac/models/database_helper.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialiser la base de donnée
+  await DatabaseHelper.initDatabase();
+
   runApp(const MyApp());
 }
 

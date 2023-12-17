@@ -1,3 +1,5 @@
+import 'package:aurlac/models/database_helper.dart';
+import 'package:aurlac/models/user.dart';
 import 'package:aurlac/widgets/filled_button_yellow.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +13,18 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  // Insertion d'utilisateur
+  Future<void> insertUser() async {
+    User user = User(username: "admin", password: "admin123");
+    await DatabaseHelper.insertUser(user);
+  }
+
+  // Récupération de la liste des utilisateurs
+  Future<void> getUsers() async {
+    List<User> users = await DatabaseHelper.getUsers();
+    print('La liste des utilisateurs : $users');
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -152,7 +166,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: [
                     FilleButtonYellow(),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        // await insertUser();
+
+                        await getUsers();
+                      },
                       child: const Text(
                         'Forgot password',
                         style: TextStyle(
