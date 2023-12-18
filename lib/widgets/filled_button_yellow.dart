@@ -1,14 +1,20 @@
-import 'package:aurlac/acceuil.dart';
+import 'package:aurlac/models/provider_model/user_name_psswd.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class FilleButtonYellow extends StatefulWidget {
-  const FilleButtonYellow({super.key});
+  const FilleButtonYellow({Key? key, required this.onPressed})
+      : super(key: key);
+
+  final Function(String username, String password) onPressed;
 
   @override
   State<FilleButtonYellow> createState() => _FilleButtonYellowState();
 }
 
 class _FilleButtonYellowState extends State<FilleButtonYellow> {
+  String _username = '';
+  String _password = '';
   @override
   Widget build(BuildContext context) {
     return FilledButton(
@@ -20,10 +26,12 @@ class _FilleButtonYellowState extends State<FilleButtonYellow> {
         overlayColor: const MaterialStatePropertyAll(Colors.yellow),
       ),
       onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (BuildContext context) => Acceuil()),
-        );
+        // Take userName&Password from provider
+        _username =
+            Provider.of<UserNameAndPsswd>(context, listen: false).userName;
+        _password =
+            Provider.of<UserNameAndPsswd>(context, listen: false).secretword;
+        widget.onPressed(_username, _password);
       },
       child: const Text(
         'Log in',

@@ -1,4 +1,4 @@
-import 'package:aurlac/acceuil.de/product.dart';
+import 'package:aurlac/product_page.dart';
 import 'package:flutter/material.dart';
 
 class IconButtonAcceuil extends StatefulWidget {
@@ -19,10 +19,10 @@ class _IconButtonAcceuilState extends State<IconButtonAcceuil> {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       itemCount: data.length,
       gridDelegate:
-          SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+          const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
       itemBuilder: ((context, index) {
         return Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -36,7 +36,8 @@ class _IconButtonAcceuilState extends State<IconButtonAcceuil> {
                   onPressed: () {
                     if (index == 1) {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (BuildContext context) => Product()));
+                          builder: (BuildContext context) =>
+                              const ProductPage()));
                     }
                   },
                   icon: Icon(

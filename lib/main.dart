@@ -1,6 +1,8 @@
 import 'package:aurlac/home.dart';
 import 'package:aurlac/models/database_helper.dart';
+import 'package:aurlac/models/provider_model/user_name_psswd.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,14 +18,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      darkTheme: ThemeData.dark(),
-      debugShowCheckedModeBanner: false,
-      title: 'Aurlac',
-      theme: ThemeData(
-        useMaterial3: true,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => UserNameAndPsswd())
+      ],
+      child: MaterialApp(
+        darkTheme: ThemeData.dark(),
+        debugShowCheckedModeBanner: false,
+        title: 'Aurlac',
+        theme: ThemeData(
+          useMaterial3: true,
+        ),
+        home: const MyHomePage(title: 'Aurlac'),
       ),
-      home: const MyHomePage(title: 'Aurlac'),
     );
   }
 }

@@ -19,15 +19,15 @@ class _AcceuilState extends State<Acceuil> {
           automaticallyImplyLeading: false,
           elevation: 5,
           shadowColor: Colors.black54,
-          // actions: [
-          //   Row(
-          //     children: [
-          //       IconButton(
-          //           onPressed: () {}, icon: const Icon(Icons.notifications)),
-          //       IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
-          //     ],
-          //   )
-          // ],
+          actions: [
+            Row(
+              children: [
+                IconButton(
+                    onPressed: () {}, icon: const Icon(Icons.notifications)),
+                IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
+              ],
+            )
+          ],
           backgroundColor: const Color.fromARGB(255, 255, 228, 94),
           title: const Text(
             'Aurlac',
@@ -45,7 +45,7 @@ class _AcceuilState extends State<Acceuil> {
                 Container(
                   width: size.width,
                   height: 250,
-                  color: Color.fromARGB(255, 255, 228, 94),
+                  color: const Color.fromARGB(255, 255, 228, 94),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 50, top: 25),
@@ -87,11 +87,11 @@ class _AcceuilState extends State<Acceuil> {
                   child: TextFormField(
                     keyboardType: TextInputType.text,
                     textCapitalization: TextCapitalization.words,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,
                     ),
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: InputBorder.none,
                       filled: true,
                       fillColor: Colors.grey,
@@ -117,7 +117,7 @@ class _AcceuilState extends State<Acceuil> {
                 child: IconButtonAcceuil(),
               ),
             ),
-            DecorationCard(),
+            const DecorationCard(),
           ],
         ),
       ),
