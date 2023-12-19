@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:aurlac/models/user.dart';
-import 'package:aurlac/models/products.dart';
+import 'package:aurlac/models/product.dart';
+import 'package:flutter/services.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:excel/excel.dart';
 import 'package:path/path.dart';
@@ -11,66 +13,80 @@ class DatabaseHelper {
   static const String tableName = 'users';
   static const String productTable = 'products';
 
-  // Initialisé la base de donnée
+  // Initialiser la base de données
   static Future<void> initDatabase() async {
-    _database ??= await openDatabase(
-      join(await getDatabasesPath(), 'app_database.db'),
-      onCreate: (db, version) async {
-        await db.execute(
-            '''CREATE TABLE $tableName (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, password TEXT)''');
-        await db.execute(
-            '''CREATE TABLE $productTable (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, weigth REAL, color TEXT, stockQuantity INTEGER)''');
-        await importProductFromExcel('assets/documents/products.xlsx');
-      },
-      version: 1,
-    );
+    try {
+      print('Création de la table');
+      _database ??= await openDatabase(
+        join(await getDatabasesPath(), 'app_database.db'),
+        onCreate: (db, version) async {
+          try {
+            await db.execute(
+                '''CREATE TABLE $tableName (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, password TEXT)''');
+            await db.execute(
+                '''CREATE TABLE IF NOT EXISTS $productTable (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, weight REAL, color TEXT, stockQuantity INTEGER)''');
+            await importProductFromExcel('assets/documents/products.xlsx');
+            print('Base de données initialisée');
+          } catch (e) {
+            print('Erreur lors de la création des tables : $e');
+          }
+        },
+        version: 1,
+      );
+    } catch (e) {
+      print('Erreur lors de l\'ouverture de la base de données : $e');
+    }
   }
 
-  // Insère un produit dans la base de données
+  // Insérer un produit dans la base de données
   static Future<void> insertProduct(Product product) async {
     await _database!.insert(productTable, product.toMap());
   }
 
-  // Insère un utilisateur dans la base de donnée
+  // Insérer un utilisateur dans la base de données
   static Future<void> insertUser(User user) async {
     await _database!.insert(tableName, user.toMap());
   }
 
-  // Récupère tous les utilisateurs
+  // Récupérer tous les utilisateurs
   static Future<List<User>> getUsers() async {
     final List<Map<String, dynamic>> maps = await _database!.query(tableName);
-    return List.generate(maps.length, (i) {
-      return User.fromMap(maps[i]);
-    });
+    return List.generate(maps.length, (i) => User.fromMap(maps[i]));
   }
 
-  // Importer la liste des produits depuis un fichier excel
+  // Importer la liste des produits depuis un fichier Excel
   static Future<void> importProductFromExcel(String excelFilePath) async {
-    final excel = Excel.decodeBytes(await File(excelFilePath).readAsBytes());
-    final sheet = excel.tables.keys.first;
+    try {
+      final ByteData data =
+          await rootBundle.load('assets/documents/products.xlsx');
+      final List<int> bytes = data.buffer.asUint8List();
+      final excel = Excel.decodeBytes(Uint8List.fromList(bytes));
+      final sheet = excel.tables.keys.first;
 
-    for (final row in excel.tables[sheet]!.rows) {
-      final productName = row[0].toString();
-      final productWeight = double.parse(row[1].toString());
-      final productColor = row[2].toString();
-      final stockQuantity = int.parse(row[3].toString());
+      for (final row in excel.tables[sheet]!.rows) {
+        final productName = row[0].toString();
+        final productWeight = double.parse(row[1].toString());
+        final productColor = row[2].toString();
+        final stockQuantity = int.parse(row[3].toString());
 
-      final product = Product(
+        final product = Product(
           name: productName,
           weight: productWeight,
           color: productColor,
-          stockQuantity: stockQuantity);
+          stockQuantity: stockQuantity,
+        );
 
-      await insertProduct(product);
+        await insertProduct(product);
+      }
+    } catch (e) {
+      print('Erreur lors de l\'importation depuis Excel : $e');
     }
   }
 
-  // Récupère tous les produits
+  // Récupérer tous les produits
   static Future<List<Product>> getProducts() async {
     final List<Map<String, dynamic>> maps =
         await _database!.query(productTable);
-    return List.generate(maps.length, (i) {
-      return Product.fromMap(maps[i]);
-    });
+    return List.generate(maps.length, (i) => Product.fromMap(maps[i]));
   }
 }
