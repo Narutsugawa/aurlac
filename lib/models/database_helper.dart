@@ -25,14 +25,14 @@ class DatabaseHelper {
                 '''CREATE TABLE $tableName (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, password TEXT)''');
             await db.execute(
                 '''CREATE TABLE IF NOT EXISTS $productTable (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, weight REAL, color TEXT, stockQuantity INTEGER)''');
-            await importProductFromExcel('assets/documents/products.xlsx');
-            print('Base de données initialisée');
           } catch (e) {
             print('Erreur lors de la création des tables : $e');
           }
         },
         version: 1,
       );
+      await importProductFromExcel('assets/documents/products.xlsx');
+      print('Base de données initialisée');
     } catch (e) {
       print('Erreur lors de l\'ouverture de la base de données : $e');
     }
@@ -63,19 +63,29 @@ class DatabaseHelper {
       final excel = Excel.decodeBytes(Uint8List.fromList(bytes));
       final sheet = excel.tables.keys.first;
 
+      print('Nombre de lignes : ${excel.tables[sheet]!.rows.length}');
+
       for (final row in excel.tables[sheet]!.rows) {
-        final productName = row[0].toString();
-        final productWeight = double.parse(row[1].toString());
-        final productColor = row[2].toString();
-        final stockQuantity = int.parse(row[3].toString());
+        final productName = row[0]?.props.first.toString();
+        //get quantity before unit(KG, L) from exemple 25KG or 1L as product weight using split and regexp if there is unit, else parse the number
+        final productWeight = double.parse(
+            row[1]?.props.first.toString().split(RegExp(r'[A-Z]')).first ??
+                (row[1]?.props.first.toString() ?? '0'));
+        final productColor = row[2]?.props.first.toString();
+        final stockQuantity = int.parse(row[3]?.props.first.toString() ?? '0');
+
+        // print('Nom du produit : $productName');
+        // print('Poids du produit : $productWeight');
+        // print('Couleur du produit : $productColor');
+        // print('Quantité en stock : $stockQuantity \n\n');
 
         final product = Product(
-          name: productName,
+          name: productName!,
           weight: productWeight,
-          color: productColor,
+          color: productColor!,
           stockQuantity: stockQuantity,
         );
-
+        print('Produit importé : $product');
         await insertProduct(product);
       }
     } catch (e) {
