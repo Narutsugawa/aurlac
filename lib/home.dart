@@ -187,6 +187,19 @@ class _MyHomePageState extends State<MyHomePage> {
                     FilleButtonYellow(
                       onPressed: _loginButtonPressed,
                     ),
+                    TextButton(
+                      onPressed: () async {
+                        await insertUser();
+
+                        await getUsers();
+                      },
+                      child: const Text(
+                        'Forgot password',
+                        style: TextStyle(
+                          color: Colors.black54,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
